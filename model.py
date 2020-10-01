@@ -18,17 +18,10 @@ all_features = ['County', 'Year', 'Bottles Sold', 'Sale (Dollars)', 'Population'
 response_var = 'Volume Sold (Liters)'
 y = iowa[response_var].to_numpy()
 
-# Dummifying categorical variables
 numeric_vars = ['Bottles Sold', 'Sale (Dollars)', 'Population']
 categorical_vars = ['County', 'Year']
-# data = iowa[numeric_vars]
-#
-# for variable in categorical_vars:
-#     dummified = pd.get_dummies(iowa[variable])
-#     data = pd.concat([data, dummified], axis=1)
 
 # model is defined as [[list of features], [B_hat vector], p, AIC, BIC]
-models = []
 
 
 def get_X_matrix(feature_list, iowa, categorical_vars):
@@ -61,7 +54,7 @@ def get_num_parameters(feature_list, categorical_vars, iowa):
     p = 1  # initialize p, accounting for intercept
     for feature in feature_list:  # for every feature in this model
         if feature in categorical_vars:  # if the feature is categorical
-            p += len(iowa[feature].unique()) - 1 # (number of categories - 1)
+            p += len(iowa[feature].unique()) - 1  # (number of categories - 1)
         else:  # if the feature is numeric
             p += 1  # then there's just one coefficient to estimate
     return p
@@ -75,12 +68,13 @@ def get_Beta_vector(X, y):
     X_t = np.transpose(X)
     return np.linalg.inv(X_t.dot(X)).dot(X_t.dot(y))
 
-def get_SSE(y, y_hat):
+
+def get_MSE(y, y_hat):
     """Arguments:
             y:     the response variable as a 1 x n numpy array
             y_hat: the predicted values of the response variable as a 1 x n numpy array
        Returns: the Sum of Squared Error, a float"""
-    return sum([(y[i] - y_hat[i]) ** 2 for i in range(len(y))])
+    return (1 / len(y)) * sum([(y[i] - y_hat[i]) ** 2 for i in range(len(y))])
 
 
 def get_AIC(y, y_hat, p):
@@ -89,7 +83,7 @@ def get_AIC(y, y_hat, p):
             y_hat: the predicted values of the response variable as a 1 x n numpy array
             p:     the number of parameters being estimated in the model, an integer
        Returns: the AIC, a float"""
-    return get_SSE(y, y_hat) + (2 * p)
+    return get_MSE(y, y_hat) + (2 * p)
 
 
 def get_BIC(y, y_hat, p):
@@ -98,7 +92,7 @@ def get_BIC(y, y_hat, p):
             y_hat: the predicted values of the response variable as a 1 x n numpy array
             p:     the number of parameters being estimated in the model, an integer
        Returns: the BIC, a float"""
-    return get_SSE(y, y_hat) + (p * math.log(len(y)))
+    return get_MSE(y, y_hat) + (p * math.log(len(y)))
 
 
 def print_models(models):
