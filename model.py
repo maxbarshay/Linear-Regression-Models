@@ -208,9 +208,12 @@ def get_best_subsets_models(all_features, categorical_vars, iowa):
 
 def get_fold_indices(k, iowa, categorical_vars):
 
+    # One possible function to use: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedShuffleSplit.html
+    # Another option: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split
+
     # I may need to change this function. It works as-is, but it's creating k 'folds' really, it is creating
     # essentially random training and test sets. So, the cross-validated metrics are pretty different between
-    # different runs of the entire program
+    # different runs of the program
 
     """Arguments:
             k:     number of partitions (folds) to create in the data
