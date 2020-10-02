@@ -15,7 +15,6 @@ zipPops = {}
 
 res = []
 
-
 for code in soup.find_all('tr'):
 
     inner = code.find_all('td')
@@ -30,14 +29,10 @@ for code in soup.find_all('tr'):
 
             # print(item)
         
-
 res = res[:-1]
 # print(res)
 
-
 for i in range(0, len(res), 3):
-
-
 
     val = res[i][-3]
 

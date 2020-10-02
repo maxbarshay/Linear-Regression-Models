@@ -8,7 +8,15 @@ soup = BeautifulSoup(myRequest.text,"html.parser")
 
 zipPops = {}
 
+i = 0
+
 for code in soup.find_all('tr'):
 
+    first = code.find_all('td')
 
-    print(code)
+
+    i += 1
+
+    if i > 10:
+        break
+    #print(code)
