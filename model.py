@@ -9,14 +9,15 @@ import random
 pd.set_option("display.max_rows", 100)
 
 # Read in data (aggregated)
-iowa = pd.read_csv('C:/Users/Mason/Desktop/Git Repositories/DATA401/Project1/agg_data.csv')
+iowa = pd.read_csv('/Users/mdbarshay/Desktop/401/Project_1_Git/new_agg_data.csv')
 
 # Clean data
 iowa = iowa.dropna()  # drop all NA values
 
 # Choosing variables that make sense:
-all_features = ['County', 'Year', 'Bottles Sold', 'Sale (Dollars)', 'Population']
-response_var = 'Volume Sold (Liters)'
+all_features = ['Zip Code', 'Date', 'Population', 'State Bottle Cost', 'State Bottle Retail'
+                'Year', 'Month', 'Day']
+response_var = 'Volume Sold (Liters) Per Capita'
 y = iowa[response_var].to_numpy()
 
 numeric_vars = ['Bottles Sold', 'Sale (Dollars)', 'Population']
